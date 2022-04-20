@@ -1,0 +1,14 @@
+{
+  "name": "binary-search-tree",
+  "version": "1.0.0",
+  "description": "A little repository for demonstrating how to implement a binary search tree class with proper methods.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "author": "Fabio Cingottini <fabio.cingottini@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^27.5.1"
+  }
+}
