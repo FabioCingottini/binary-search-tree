@@ -8,21 +8,30 @@
     - [Check if a value is contained](#check-if-a-value-is-contained)
     - [Remove a value](#remove-a-value)
     - [Validating a tree](#validating-a-tree)
+    - [Traversing a tree](#traversing-a-tree)
 
 ## Description
 
-This npm repository export a class `BinarySearchTree` useful for performing common operations on a binary search tree
-and a function `validateBinarySearchTree` for validating a tree as a valid binary search tree.
+This npm repository exports:
+
+- A class `BinarySearchTree` useful for performing common operations on a binary search tree.
+- A function `validateBinarySearchTree` for validating a tree as a valid binary search tree.
+- A function `inOrderTraverse` for traversing a binary search tree in in-order.
+- A function `preOrderTraverse` for traversing a binary search tree in pre-order.
+- A function `postOrderTraverse` for traversing a binary search tree in post-order.
 
 ## API
 
-| Method                                                   | Description                                                                                                                                                                       |  
-|----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `BinarySearchTree.constructor(value: number)`            | Given a `value` of type `number`, create a single node BST                                                                                                                        |
-| `BinarySearchTree.insert(value: number): bool`           | Given a `value` of type `number`, insert that value into the BST, return whether the insertion was successful                                                                     |
-| `BinarySearchTree.contains(value: number): bool`         | Given a `value` of type `number`, return whether the value is contained in the BST                                                                                                |
-| `BinarySearchTree.remove(value: number): bool`           | Given a `value` of type `number`, remove value from the BST, return whether the insertion was successful or not                                                                   |
-| `validateBinarySearchTree(tree: BinarySearchTree): bool` | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `right: BinarySearchTree` return a boolean representing whether the tree is a correct binary search tree |
+| Method                                                                  | Description                                                                                                                                                                       |  
+|-------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `BinarySearchTree.constructor(value: number)`                           | Given a `value` of type `number`, create a single node BST                                                                                                                        |
+| `BinarySearchTree.insert(value: number): bool`                          | Given a `value` of type `number`, insert that value into the BST, return whether the insertion was successful                                                                     |
+| `BinarySearchTree.contains(value: number): bool`                        | Given a `value` of type `number`, return whether the value is contained in the BST                                                                                                |
+| `BinarySearchTree.remove(value: number): bool`                          | Given a `value` of type `number`, remove value from the BST, return whether the insertion was successful or not                                                                   |
+| `validateBinarySearchTree(tree: BinarySearchTree): bool`                | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `right: BinarySearchTree` return a boolean representing whether the tree is a correct binary search tree |
+| `inOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`    | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in in-order                 |
+| `preOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`   | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in pre-order                |
+| `postOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`  | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in post-order               |
 
 | Property                                             | Description                                                                                                 |  
 |------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
@@ -172,10 +181,10 @@ bst.remove(70);
 ```
 
 #### Validating a tree
+
 ```javascript
 
-const {BinarySearchTree} = require("./binary-search-tree");
-const {validateBinarySearchTree} = require("./binary-search-tree");
+const {BinarySearchTree, validateBinarySearchTree} = require("./binary-search-tree");
 
 const validBst = new BinarySearchTree(17);
 validBst.insert(70);
@@ -192,7 +201,7 @@ validBst.insert(5);
 //         /  \     /   \    
 //        5    10  66    98
 
-const isValid1 = validateBinarySearchTree(validBst) 
+const isValid1 = validateBinarySearchTree(validBst)
 console.log(isValid1) // true
 
 // now let's try with an invalid one 
@@ -236,4 +245,41 @@ const invalidBST = {
 
 const isValid2 = validateBinarySearchTree(invalidBst)
 console.log(isValid2) // false
+```
+
+#### Traversing a tree
+
+```javascript
+const {
+  BinarySearchTree,
+  inOrderTraverse,
+  preOrderTraverse,
+  postOrderTraverse,
+} = require("./binary-search-tree");
+
+const bst = new BinarySearchTree(10);
+bst.insert(5);
+bst.insert(5);
+bst.insert(2);
+bst.insert(1);
+bst.insert(15);
+bst.insert(22);
+
+// the BST could be representing by the following draw
+//               10          
+//            /      \       
+//           5        15     
+//         /  \        \    
+//       2     5       22
+//     /
+//   1 
+
+const inOrderTraversal = inOrderTraverse(bst, []);
+const preOrderTraversal = preOrderTraverse(bst, []);
+const postOrderTraversal = postOrderTraverse(bst, []);
+
+console.log(inOrderTraversal); // [1, 2, 5, 5, 10, 15, 22]
+console.log(preOrderTraversal); // [10, 5, 2, 1, 5, 15, 22]
+console.log(postOrderTraversal); // [1, 2, 5, 5, 22, 15, 10]
+
 ```
