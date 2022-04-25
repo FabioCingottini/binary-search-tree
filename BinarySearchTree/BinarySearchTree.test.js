@@ -116,6 +116,72 @@ describe("Test class BinarySearchTree", () => {
     expect(doesContain7).toBeFalsy();
   });
 
+  it("Should modify the BST in the proper way when remove is called on root node", () => {
+    // arrange
+    const bst = new BinarySearchTree(17);
+    bst.insert(70);
+    bst.insert(98);
+    bst.insert(56);
+    bst.insert(13);
+    bst.insert(16);
+    bst.insert(10);
+
+    // in this example the act and arrange would be coupled for best assertion on the deletion
+    // FIRST REMOVAL
+    // act
+    bst.remove(17);
+    // assert
+    // bst should be from:     to:
+    //         17                      56
+    //      /      \                /     \
+    //    13        70            13       70
+    //   /  \     /   \          /  \        \
+    // 10    16  56    98      10    16       98
+    expect(bst).toHaveProperty("value", 56);
+
+    // SECOND REMOVAL
+    // act
+    bst.remove(56);
+    // assert
+    // bst should be from:     to:
+    //         56                      70
+    //      /     \                 /     \
+    //    13       70             13       98
+    //   /  \        \           /  \
+    // 10    16       98       10    16
+    expect(bst).toHaveProperty("value", 70);
+
+    // THIRD REMOVAL
+    // act
+    bst.remove(70);
+    // assert
+    // bst should be from:     to:
+    //         70                      98
+    //      /     \                  /
+    //    13       98              13
+    //   /  \                     /  \
+    // 10    16                 10    16
+    expect(bst).toHaveProperty("value", 98);
+
+    // FOURTH REMOVAL
+    // act
+    bst.remove(98);
+    // assert
+    // bst should be from:     to:
+    //        98                  13
+    //      /                    /  \
+    //    13                   10    16
+    //   /  \
+    // 10    16
+    expect(bst).toHaveProperty("value", 13);
+
+
+
+
+
+
+  })
+
   it("Should modify the BST in the proper way when remove is called on a leaf node", () => {
     // arrange
     const bst = new BinarySearchTree(10);

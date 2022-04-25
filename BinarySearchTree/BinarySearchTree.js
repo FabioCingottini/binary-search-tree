@@ -16,31 +16,28 @@ class BinarySearchTree {
   }
 
   /**
-   * Given a value, insert it in the BST and return a boolean representing whether has been inserted.
+   * Given a value, insert it in the BST and return the instance on which the method was executed.
    *
    * @param {number} value - The number value to insert in the BST.
    *
-   * @returns {boolean} hasBeenInserted - Whether the node has been inserted.
+   * @returns {BinarySearchTree} this - The instance on which the method was executed.
    */
   insert(value) {
-    let current = this;
-    while (current !== null) {
-      switch (true) {
-        case value >= current.value && current.right === null:
-          current.right = new BinarySearchTree(value);
-          return true;
-        case value < current.value && current.left === null:
-          current.left = new BinarySearchTree(value);
-          return true;
-        case value >= current.value:
-          current = current.right
-          break;
-        case value < current.value:
-          current = current.left
-          break;
+    // if the value I'm trying to insert is lower or equal, go to the right, left otherwise
+    if (this.value <= value) {
+      if (this.right === null) {
+        this.right = new BinarySearchTree(value);
+      } else {
+        this.right.insert(value);
+      }
+    } else {
+      if (this.left === null) {
+        this.left = new BinarySearchTree(value);
+      } else {
+        this.left.insert(value);
       }
     }
-    return false;
+    return this;
   }
 
   /**
@@ -51,97 +48,78 @@ class BinarySearchTree {
    * @returns {boolean} isContained - Whether the given value is contained in the BST.
    */
   contains(value) {
-    let current = this;
-    while (current !== null) {
-      switch (true) {
-        case value === current.value:
-          return true;
-        case value >= current.value:
-          current = current.right
-          break;
-        case value < current.value:
-          current = current.left
-          break;
+    if (this.value === value) {
+      return true;
+    } else if (this.value < value) {
+      if (this.right === null) {
+        return false;
+      } else {
+        return this.right.contains(value);
+      }
+    } else {
+      if (this.left === null) {
+        return false;
+      } else {
+        return this.left.contains(value);
       }
     }
-    return false;
   }
 
 
   /**
-   * Given a value, remove it from the BST and return a boolean representing whether the node has been removed.
+   * Given a value, remove it from the BST and return the instance on which the method was executed.
    *
    * @param {number} value - The value to remove from the BST.
+   * @param {BinarySearchTree | null} parent - This method uses recursion, therefore  when called internally it passes additional infos.
    *
-   * @returns {boolean} hasBeenRemoved - Whether the node has been removed from the BST.
+   * @returns {BinarySearchTree} this - The instance on which the method was executed.
    */
-  remove(value) {
-    let current = this;
-    let previous = null;
-    while (current !== null) {
-      switch (true) {
-        case value === current.value: {
-          // manage the node deletion
-          switch (true) {
-            // node hasn't successors
-            case current.left === null && current.right === null:
-              if (previous.left && previous.left.value === current.value) {
-                previous.left = null;
-              } else if (previous.right && previous.right.value === current.value) {
-                previous.right = null;
-              }
-              return true;
-            // node has only left successor
-            case current.left !== null && current.right === null:
-              if (previous.left && previous.left.value === current.value) {
-                previous.left = current.left;
-              } else if (previous.right && previous.right.value === current.value) {
-                previous.right = current.left;
-              }
-              return true;
-            // node has only right successor
-            case current.left === null && current.right !== null:
-              if (previous.left && previous.left.value === current.value) {
-                previous.left = current.right;
-              } else if (previous.right && previous.right.value === current.value) {
-                previous.right = current.right;
-              }
-              return true;
-            // node has both successors
-            case current.left !== null && current.right !== null:
-              // pick the littlest from the right tree
-              let subTreeCurrent = current.right;
-              let subTreePrevious = current;
-              while (subTreeCurrent.left !== null) {
-                subTreePrevious = subTreeCurrent
-                subTreeCurrent = subTreeCurrent.left
-              }
-              // attach the current followings to the littlest
-              subTreeCurrent.left = current.left;
-              subTreeCurrent.right = current.right;
-              // attach null to the subtree previous
-              subTreePrevious.left = null;
-              // attach the littlest to the previous
-              if (previous.left && previous.left.value === current.value) {
-                previous.left = subTreeCurrent;
-              } else if (previous.right && previous.right.value === current.value) {
-                previous.right = subTreeCurrent;
-              }
-              return true;
-          }
-          break;
+  remove(value, parent = null) {
+    if (this.value < value) {
+      if (this.right) { // right could be null in case of a non-existent value
+        this.right.remove(value, this);
+      }
+    } else if (this.value > value) {
+      if (this.left) { // left could be null in case of a non-existent value
+        this.left.remove(value, this);
+      }
+    } else { // in this case the value is the same
+      // no parent need to be managed differently
+      // no left and no right means this is a single node
+      if (this.left && this.right) {
+        this.value = this.right.getMinValue();
+        this.right.remove(this.value, this);
+      } else if (!parent) {
+        if (!this.left && this.right) {
+          // copy the node and modify the pointers of the current nodes to point to the child successor(s)
+          this.value = this.right.value;
+          this.left = this.right.left;
+          this.right = this.right.right;
+        } else if (this.left && !this.right) {
+          // copy the node and modify the pointers of the current nodes to point to the child successor(s)
+          this.value = this.left.value;
+          this.right = this.left.right;
+          this.left = this.left.left;
+        } else if (!this.left && !this.right) {
+          // no parent, no left and no right means this is a single node
+          return this; // just for not leaving this if empty
         }
-        case value >= current.value:
-          previous = current;
-          current = current.right
-          break;
-        case value < current.value:
-          previous = current;
-          current = current.left
-          break;
+      } else if (parent.right === this) { // has the right one but not the left one
+        parent.right = this.left ? this.left : this.right;
+      } else if (parent.left === this) { // has the left one but not the right one
+        parent.left = this.left ? this.left : this.right;
       }
     }
-    return false;
+    return this;
+  }
+
+  getMinValue() {
+    // min value will always be at left
+    if (this.left) {
+      return this.left.getMinValue();
+    } else {
+      return this.value;
+    }
   }
 }
 
