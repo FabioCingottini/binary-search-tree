@@ -1,3 +1,7 @@
 const {BinarySearchTree} = require("./BinarySearchTree");
+const {validateBinarySearchTree} = require("./validateBinarySearchTree");
 
-module.exports = {BinarySearchTree};
+module.exports = {
+  BinarySearchTree,
+  validateBinarySearchTree
+};
