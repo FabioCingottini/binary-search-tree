@@ -9,6 +9,7 @@
     - [Remove a value](#remove-a-value)
     - [Validating a tree](#validating-a-tree)
     - [Traversing a tree](#traversing-a-tree)
+    - [Creating tree with minimized height](#creating-tree-with-minimized-height)
 
 ## Description
 
@@ -19,19 +20,21 @@ This npm repository exports:
 - A function `inOrderTraverse` for traversing a binary search tree in in-order.
 - A function `preOrderTraverse` for traversing a binary search tree in pre-order.
 - A function `postOrderTraverse` for traversing a binary search tree in post-order.
+- A function `createBinarySearchTreeWithHeightMinimized` for creating a bst with the height minimized.
 
 ## API
 
-| Method                                                                  | Description                                                                                                                                                                       |  
-|-------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `BinarySearchTree.constructor(value: number)`                           | Given a `value` of type `number`, create a single node BST                                                                                                                        |
-| `BinarySearchTree.insert(value: number): bool`                          | Given a `value` of type `number`, insert that value into the BST, return whether the insertion was successful                                                                     |
-| `BinarySearchTree.contains(value: number): bool`                        | Given a `value` of type `number`, return whether the value is contained in the BST                                                                                                |
-| `BinarySearchTree.remove(value: number): bool`                          | Given a `value` of type `number`, remove value from the BST, return whether the insertion was successful or not                                                                   |
-| `validateBinarySearchTree(tree: BinarySearchTree): bool`                | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `right: BinarySearchTree` return a boolean representing whether the tree is a correct binary search tree |
-| `inOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`    | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in in-order                 |
-| `preOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`   | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in pre-order                |
-| `postOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`  | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in post-order               |
+| Method                                                                         | Description                                                                                                                                                                       |  
+|--------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `BinarySearchTree.constructor(value: number)`                                  | Given a `value` of type `number`, create a single node BST                                                                                                                        |
+| `BinarySearchTree.insert(value: number): bool`                                 | Given a `value` of type `number`, insert that value into the BST, return whether the insertion was successful                                                                     |
+| `BinarySearchTree.contains(value: number): bool`                               | Given a `value` of type `number`, return whether the value is contained in the BST                                                                                                |
+| `BinarySearchTree.remove(value: number): bool`                                 | Given a `value` of type `number`, remove value from the BST, return whether the insertion was successful or not                                                                   |
+| `validateBinarySearchTree(tree: BinarySearchTree): bool`                       | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `right: BinarySearchTree` return a boolean representing whether the tree is a correct binary search tree |
+| `inOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`           | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in in-order                 |
+| `preOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`          | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in pre-order                |
+| `postOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`         | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in post-order               |
+| `createBinarySearchTreeWithHeightMinimized(array: number[]): BinarySearchTree` | Given a sorted `array: Array<number>` returns a balanced tree with the minimum possible height.                                                                                   |
 
 | Property                                             | Description                                                                                                 |  
 |------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
@@ -282,4 +285,22 @@ console.log(inOrderTraversal); // [1, 2, 5, 5, 10, 15, 22]
 console.log(preOrderTraversal); // [10, 5, 2, 1, 5, 15, 22]
 console.log(postOrderTraversal); // [1, 2, 5, 5, 22, 15, 10]
 
+```
+
+#### Creating tree with minimized height
+
+```javascript
+const {createBinarySearchTreeWithHeightMinimized} = require("./binary-search-tree");
+
+const nodes = [1, 7, 2, 5, 10, 15, 13, 14].sort((a, b) => a - b); // it's important the node are sorted 
+const bst = createBinarySearchTreeWithHeightMinimized(nodes);
+
+// then the var bst could be represented by the following draw
+//               10          
+//            /      \       
+//           5        14     
+//         /  \     /    \    
+//       2     7   13    15
+//     /
+//   1
 ```
