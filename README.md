@@ -10,6 +10,7 @@
     - [Validating a tree](#validating-a-tree)
     - [Traversing a tree](#traversing-a-tree)
     - [Creating tree with minimized height](#creating-tree-with-minimized-height)
+    - [Finding the kth biggest number in a tree](#finding-the-kth-biggest-number-in-a-tree)
 
 ## Description
 
@@ -21,6 +22,7 @@ This npm repository exports:
 - A function `preOrderTraverse` for traversing a binary search tree in pre-order.
 - A function `postOrderTraverse` for traversing a binary search tree in post-order.
 - A function `createBinarySearchTreeWithHeightMinimized` for creating a bst with the height minimized.
+- A function `findKthLargestValue` for searching the kth biggest number in the tree.
 
 ## API
 
@@ -35,6 +37,7 @@ This npm repository exports:
 | `preOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`          | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in pre-order                |
 | `postOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`         | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in post-order               |
 | `createBinarySearchTreeWithHeightMinimized(array: number[]): BinarySearchTree` | Given a sorted `array: Array<number>` returns a balanced tree with the minimum possible height.                                                                                   |
+| `findKthLargestValue(tree: BinarySearchTree, k: number)`                       | Given a `tree` object with `value: number`, `left: BinarySearchTree` and a `k: number` return the kth biggest value in the three                                                  |
 
 | Property                                             | Description                                                                                                 |  
 |------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
@@ -303,4 +306,29 @@ const bst = createBinarySearchTreeWithHeightMinimized(nodes);
 //       2     7   13    15
 //     /
 //   1
+```
+
+#### Finding the kth biggest number in a tree
+```javascript
+const {BinarySearchTree, findKthLargestValue} = require("./binary-search-tree");
+
+const bst = new BinarySearchTree(13);
+bst.insert(15);
+bst.insert(5);
+bst.insert(14);
+bst.insert(7);
+bst.insert(10);
+bst.insert(2);
+bst.insert(1);
+// then the var bst could be represented by the following draw
+//               13          
+//            /      \       
+//           5        15     
+//         /  \        \    
+//       2     7        14
+//     /        \
+//   1          10
+
+const kthLargestNumber = findKthLargestValue(tree, 3)
+console.log(kthLargestNumber); // 13
 ```
