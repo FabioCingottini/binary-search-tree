@@ -5,6 +5,7 @@ const {preOrderTraverse} = require("./preOrderTraverse");
 const {postOrderTraverse} = require("./postOrderTraverse");
 const {createBinarySearchTreeWithHeightMinimized} = require("./createBinarySearchTreeWithHeightMinimized");
 const {findKthLargestValue} = require("./findKthLargestValue");
+const {reverseOrderTraverse} = require("./reverseOrderTraverse");
 
 
 module.exports = {
@@ -14,5 +15,6 @@ module.exports = {
   preOrderTraverse,
   postOrderTraverse,
   createBinarySearchTreeWithHeightMinimized,
-  findKthLargestValue
+  findKthLargestValue,
+  reverseOrderTraverse,
 };

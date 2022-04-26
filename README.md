@@ -21,6 +21,7 @@ This npm repository exports:
 - A function `inOrderTraverse` for traversing a binary search tree in in-order.
 - A function `preOrderTraverse` for traversing a binary search tree in pre-order.
 - A function `postOrderTraverse` for traversing a binary search tree in post-order.
+- A function `reverseOrderTraverse` for traversing a binary search tree in in-reverse-order
 - A function `createBinarySearchTreeWithHeightMinimized` for creating a bst with the height minimized.
 - A function `findKthLargestValue` for searching the kth biggest number in the tree.
 
@@ -36,6 +37,7 @@ This npm repository exports:
 | `inOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`           | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in in-order                 |
 | `preOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`          | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in pre-order                |
 | `postOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`         | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in post-order               |
+| `reverseOrderTraverse(tree: BinarySearchTree, array: number[]): number[]`      | Given a `tree` object with `value: number`, `left: BinarySearchTree` and `array: number[]` return an array of numbers represening the traversed nodes in in-reverse-order         |
 | `createBinarySearchTreeWithHeightMinimized(array: number[]): BinarySearchTree` | Given a sorted `array: Array<number>` returns a balanced tree with the minimum possible height.                                                                                   |
 | `findKthLargestValue(tree: BinarySearchTree, k: number)`                       | Given a `tree` object with `value: number`, `left: BinarySearchTree` and a `k: number` return the kth biggest value in the three                                                  |
 
@@ -261,6 +263,7 @@ const {
   inOrderTraverse,
   preOrderTraverse,
   postOrderTraverse,
+  reverseOrderTraverse,
 } = require("./binary-search-tree");
 
 const bst = new BinarySearchTree(10);
@@ -283,10 +286,12 @@ bst.insert(22);
 const inOrderTraversal = inOrderTraverse(bst, []);
 const preOrderTraversal = preOrderTraverse(bst, []);
 const postOrderTraversal = postOrderTraverse(bst, []);
+const reverseOrderTraversal = reverseOrderTraverse(bst, []);
 
 console.log(inOrderTraversal); // [1, 2, 5, 5, 10, 15, 22]
 console.log(preOrderTraversal); // [10, 5, 2, 1, 5, 15, 22]
 console.log(postOrderTraversal); // [1, 2, 5, 5, 22, 15, 10]
+console.log(reverseOrderTraversal); // [22, 15, 10, 5, 5, 2, 1]
 
 ```
 
